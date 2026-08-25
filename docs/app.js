@@ -1683,7 +1683,7 @@ async function init() {
     let gpsPos = null; // [lon,lat] when the start is the GPS fix
     let net = null, netBuilding = null;
 
-    // equirectangular metres around Kraków — good to ~0.1% at city scale
+    // equirectangular metres around the data bbox centre — good to ~0.1% at city scale
     const R = 6371000, rad = Math.PI / 180, cosLat = Math.cos(((meta.bbox[1] + meta.bbox[3]) / 2) * rad);
     const mx = (ll) => [ll[0] * rad * R * cosLat, ll[1] * rad * R];
 
