@@ -7,7 +7,7 @@ and track geometry.
 
 ## Live
 
-**https://miqell24.github.io/addis-bus-map/** — GitHub Pages from `main:/docs`. Local build on port 8158 (`npm run serve`).
+**https://agcghub.github.io/addis-bus-map/** — GitHub Pages from `main:/docs`. Local build on port 8158 (`npm run serve`).
 
 One bundle, three networks:
 
