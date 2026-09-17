@@ -1,7 +1,7 @@
 # Addis Ababa Public Transport — interactive map
 
 Interactive, poster-grade map of the public transport of **Addis Ababa**: the
-Anbessa and Sheger city buses, the minibus taxis of the sub-city associations
+Anbesa and Sheger city buses, the minibus taxis of the sub-city associations
 and the two Light Rail lines — 447 lines / 9 465 km drawn along the real street
 and track geometry.
 
@@ -13,7 +13,7 @@ One bundle, three networks:
 
 | category | source | lines | drawn |
 |---|---|---|---|
-| formal buses (navy) | route_type 3, Anbessa `AB…` + Sheger `SH…`, `A/B/C/D…` | 194 | 5 345 km |
+| formal buses (navy) | route_type 3, Anbesa `1–131` (the feed's `AB…` printed bare) + Sheger `SH…`, `A/B/C/D…` | 194 | 5 345 km |
 | minibus taxis (amber) | route_type 3, `(Minibus)` in the long name | 251 | 4 056 km |
 | Light Rail | route_type 0, E–W green / S–N blue | 2 | 64 km |
 
@@ -87,3 +87,8 @@ Teji, 40–50 km out) and MapLibre GL. `npm run build` map-matches every line
 
 Data: GTFS by AddisMapTransit / DigitalTransport4Africa (ODbL) · base map
 © OpenFreeMap / OpenMapTiles / OpenStreetMap contributors.
+
+## 17.09.2026 — requested fixes
+
+- **Anbesa, one s.** The operator's name as the city writes it, not the anglicised "Anbessa" — the double s only pushes an English reader towards "an-BEE-sa".
+- **Bare numbers for the Anbesa buses.** The feed's `AB003` is the 3 on the bus and `AB037` the 37, so the keys drop the prefix and the zeros (`AB036(S)` → `36(S)`) and sort first, as bare numbers do everywhere in the family. The Sheger prefixes (`SH…`, `A/B/C/D…`) and the minibus associations' names stay — they tell the operators apart. Applied to the published data by a post-pass; `pipeline/build.mjs` carries the same rule (`lineKey`) for the next build.

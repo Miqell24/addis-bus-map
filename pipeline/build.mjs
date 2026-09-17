@@ -4,7 +4,7 @@
 // and extracts the GTFS from it; DigitalTransport4Africa mirrors the result.
 // The 2026 file carries all of it and route_type plus one long-name marker
 // separate the worlds:
-//   • formal buses, navy — Anbessa City Bus (AB…) and Sheger Mass Transport
+//   • formal buses, navy — Anbesa City Bus (1–131) and Sheger Mass Transport
 //     (SH…, A/B/C/D…), 194 routes reaching 40–50 km out of town,
 //   • the minibus taxis, amber — 251 routes of the sub-city associations
 //     (ADK, Lafto, Kolfa, Bole, Kal, YK, KRK, Gl, LK, ARD, LID), marked
@@ -127,13 +127,17 @@ const busList = busArgs.filter((a) => a !== '--all');
 // number ("Tx ADK 002", "TX Kolfe 023", "Lafto 044") — up to 12 characters for
 // what is really an association and a number, and a street here can gather two
 // dozen of them. The token goes, the space closes: ADK002, Kolfe023, Lafto044.
-// The eight plain TX### names stay as they are, and so does every bus name.
-// 447 names in, 447 keys out — no collision, checked. (Kolfa042 and Kolfe042
-// are two different routes in the feed and stay two keys; the spellings are
-// not merged.)
+// The eight plain TX### names stay as they are. The Anbesa buses (17.09.2026)
+// print the bare number the city uses — the feed's AB003 is the 3 on the bus,
+// AB037 the 37 — so the prefix and the zeros go (AB036(S) → 36(S)); the
+// Sheger prefixes stay, they tell the two operators apart. 447 names in, 447
+// keys out — no collision, checked. (Kolfa042 and Kolfe042 are two different
+// routes in the feed and stay two keys; the spellings are not merged.)
 const lineKey = (sn) => {
   const s0 = (sn || '').trim();
-  let m = /^(?:Tx|TX)\s+([A-Za-z]+)\s*(\d+)$/.exec(s0);   // "Tx ADK 002"
+  let m = /^AB0*(\d+)(.*)$/.exec(s0);                       // "AB003", "AB036(S)"
+  if (m) return m[1] + m[2];
+  m = /^(?:Tx|TX)\s+([A-Za-z]+)\s*(\d+)$/.exec(s0);       // "Tx ADK 002"
   if (m) return m[1] + m[2];
   m = /^([A-Za-z]+)\s+(\d+)$/.exec(s0);                    // "Lafto 044", "LK 015"
   if (m) return m[1] + m[2];
@@ -147,7 +151,7 @@ const isPara = (r) => /\(Minibus\)\s*$/.test(r.route_long_name || '');
 const MODES = [{
   mode: 'bus', label: 'road transport', osmFile: 'data/osm/addis.json',
   graphMode: 'road', color: '#0059a9', colorDark: '#00294f',
-  all: busAll, lines: busList.length ? busList : (busAll ? [] : ['AB010']),
+  all: busAll, lines: busList.length ? busList : (busAll ? [] : ['10']),
   feeds: [
     { tag: 'aa', dir: 'data/gtfs', mapKey: lineKey, routeTypes: ['3'], mline: isPara },
   ],
